@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DEVELOPER | Bio</title>
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -14,7 +13,6 @@
         }
 
         body {
-            background: linear-gradient(145deg, #0b0710 0%, #1a1025 100%);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
             display: flex;
@@ -22,6 +20,46 @@
             align-items: center;
             padding: 20px;
             color: #f0eaff;
+            position: relative;
+            background: #0b0710;
+            overflow-x: hidden;
+        }
+
+        /* Анимированный фон — движущиеся полоски */
+        body::before {
+            content: "";
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 30px,
+                rgba(150, 80, 255, 0.03) 30px,
+                rgba(200, 120, 255, 0.05) 60px
+            );
+            animation: moveStripes 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(100, 50, 200, 0.15), transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes moveStripes {
+            0% { transform: rotate(0deg) translate(0, 0); }
+            100% { transform: rotate(10deg) translate(5%, 5%); }
         }
 
         /* Хедер */
@@ -30,12 +68,12 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(45, 25, 65, 0.7);
+            background: rgba(45, 25, 65, 0.8);
             backdrop-filter: blur(15px);
             border-radius: 60px;
             padding: 12px 30px;
-            border: 1px solid rgba(180, 130, 255, 0.3);
-            box-shadow: 0 10px 30px rgba(106, 13, 173, 0.3);
+            border: 1px solid rgba(180, 130, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(106, 13, 173, 0.5);
             z-index: 100;
             display: flex;
             gap: 30px;
@@ -46,9 +84,10 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 1.1rem;
-            transition: 0.2s;
+            transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
             padding: 8px 18px;
             border-radius: 40px;
+            will-change: transform;
         }
 
         .header a:hover {
@@ -65,16 +104,20 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
+            position: relative;
+            z-index: 10;
         }
 
-        /* Левая карточка — фиолетовый градиент */
+        /* Левая карточка */
         .profile-card {
-            background: linear-gradient(145deg, #1e1530, #2d1b44);
+            background: rgba(30, 15, 48, 0.7);
+            backdrop-filter: blur(12px);
             border-radius: 60px;
             padding: 45px 40px;
             border: 1px solid #a27bff;
             box-shadow: 0 30px 50px -15px #6b21ff, 0 0 0 2px rgba(170, 120, 255, 0.3) inset;
-            transition: all 0.4s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            will-change: transform;
         }
 
         .profile-card:hover {
@@ -158,9 +201,10 @@
             display: inline-flex;
             align-items: center;
             gap: 15px;
-            transition: 0.25s;
+            transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
             backdrop-filter: blur(10px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+            will-change: transform;
         }
 
         .social-btn i {
@@ -255,7 +299,8 @@
         }
         .player-controls i {
             cursor: pointer;
-            transition: 0.2s;
+            transition: transform 0.2s, color 0.2s, text-shadow 0.2s;
+            will-change: transform;
         }
         .player-controls i:hover {
             color: #f0d3ff;
@@ -286,7 +331,8 @@
             cursor: pointer;
             border: 2px solid white;
             box-shadow: 0 20px 40px -5px #b47aff;
-            transition: 0.25s;
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            will-change: transform;
         }
         .contact-btn:hover {
             transform: scale(1.03);
@@ -304,7 +350,8 @@
         }
 
         .terminal-block {
-            background: #0e0719;
+            background: rgba(14, 7, 25, 0.8);
+            backdrop-filter: blur(8px);
             border-radius: 50px;
             padding: 40px;
             border: 2px solid #b47aff;
@@ -350,7 +397,8 @@
         }
 
         .stack-card {
-            background: #140d24;
+            background: rgba(20, 13, 36, 0.8);
+            backdrop-filter: blur(8px);
             border-radius: 50px;
             padding: 40px;
             border: 2px solid #b47aff;
@@ -525,82 +573,119 @@
         </div>
     </div>
 
-    <!-- Скрипт плеера (твой плейлист) -->
+    <!-- Скрипт плеера (исправлен: теперь ссылки на GitHub) -->
     <script>
-        const playlist = [
-            { title: "На руках", artist: "БРЕДИШЬ", src: "https://drive.google.com/uc?export=download&id=1N_CzI3x5wlz7doAAgWj7vStD_UbM8OYr" },
-            { title: "я бы носил тебя на руках", artist: "БРЕДИШЬ", src: "https://drive.google.com/uc?export=download&id=1fvKIxHx_wAeVvL-vTjLsKWWvo7yOiZOo" },
-            { title: "А люди любят", artist: "Дайте танк", src: "https://drive.google.com/uc?export=download&id=1NcSodnjAmcV78vuHoPVHN5wbTRuO3T1M" },
-            { title: "Самый лучший день", artist: "Кишлак", src: "https://drive.google.com/uc?export=download&id=1mBU-6K_8yAT-NntsgBa3e10x_ZBeyzyO" },
-            { title: "батарейка speed up", artist: "speed up", src: "https://drive.google.com/uc?export=download&id=1A1NRGbE9jjkx1nMjqwjG7DuRmbHZD4Yv" }
-        ];
+        (function() {
+            // ВАЖНО! Чтобы музыка работала, нужно загрузить mp3-файлы на GitHub 
+            // и заменить ссылки ниже на raw-версии (как в примере).
+            // Инструкция в комментариях после кода.
+            const playlist = [
+                { title: "На руках", artist: "БРЕДИШЬ", src: "https://raw.githubusercontent.com/ТВОЙ-ЛОГИН/MyBio/main/bredishe_na_rukah.mp3" },
+                { title: "я бы носил тебя на руках", artist: "БРЕДИШЬ", src: "https://raw.githubusercontent.com/ТВОЙ-ЛОГИН/MyBio/main/bredishe_hardsyle.mp3" },
+                { title: "А люди любят", artist: "Дайте танк", src: "https://raw.githubusercontent.com/ТВОЙ-ЛОГИН/MyBio/main/dajte_tank.mp3" },
+                { title: "Самый лучший день", artist: "Кишлак", src: "https://raw.githubusercontent.com/ТВОЙ-ЛОГИН/MyBio/main/kishlak.mp3" },
+                { title: "батарейка speed up", artist: "speed up", src: "https://raw.githubusercontent.com/ТВОЙ-ЛОГИН/MyBio/main/batareika.mp3" }
+            ];
 
-        let index = 0, playing = false;
-        const audio = new Audio();
-        const playBtn = document.getElementById('play-pause-btn');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const seek = document.getElementById('seek-bar');
-        const curTime = document.getElementById('current-time');
-        const durTime = document.getElementById('duration-time');
-        const title = document.getElementById('track-title');
-        const artist = document.getElementById('track-artist');
+            let index = 0, playing = false;
+            const audio = new Audio();
+            const playBtn = document.getElementById('play-pause-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const seek = document.getElementById('seek-bar');
+            const curTime = document.getElementById('current-time');
+            const durTime = document.getElementById('duration-time');
+            const title = document.getElementById('track-title');
+            const artist = document.getElementById('track-artist');
 
-        function loadTrack(i) {
-            const t = playlist[i];
-            audio.src = t.src;
-            title.innerText = t.title;
-            artist.innerText = t.artist;
-            audio.load();
-            if (playing) audio.play();
-        }
-
-        function format(sec) {
-            if (isNaN(sec)) return '0:00';
-            const m = Math.floor(sec/60);
-            const s = Math.floor(sec%60);
-            return m + ':' + (s<10?'0':'') + s;
-        }
-
-        audio.addEventListener('timeupdate', () => {
-            seek.value = audio.currentTime;
-            curTime.innerText = format(audio.currentTime);
-        });
-        audio.addEventListener('loadedmetadata', () => {
-            seek.max = audio.duration;
-            durTime.innerText = format(audio.duration);
-        });
-        audio.addEventListener('ended', () => {
-            if (index < playlist.length-1) index++; else index=0;
-            loadTrack(index);
-            audio.play();
-        });
-
-        playBtn.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play();
-                playBtn.classList.replace('fa-play', 'fa-pause');
-                playing = true;
-            } else {
-                audio.pause();
-                playBtn.classList.replace('fa-pause', 'fa-play');
-                playing = false;
+            function loadTrack(i) {
+                const t = playlist[i];
+                audio.src = t.src;
+                title.innerText = t.title;
+                artist.innerText = t.artist;
+                audio.load();
+                // Сброс времени
+                seek.value = 0;
+                curTime.innerText = '0:00';
+                durTime.innerText = '0:00';
+                if (playing) {
+                    audio.play().catch(e => {
+                        console.warn('Ошибка воспроизведения:', e);
+                        playing = false;
+                        playBtn.classList.replace('fa-pause', 'fa-play');
+                    });
+                }
             }
-        });
 
-        prevBtn.addEventListener('click', () => {
-            index = index>0 ? index-1 : playlist.length-1;
-            loadTrack(index);
-            if (playing) audio.play();
-        });
-        nextBtn.addEventListener('click', () => {
-            index = index<playlist.length-1 ? index+1 : 0;
-            loadTrack(index);
-            if (playing) audio.play();
-        });
-        seek.addEventListener('input', () => audio.currentTime = seek.value);
+            function format(sec) {
+                if (isNaN(sec)) return '0:00';
+                const m = Math.floor(sec / 60);
+                const s = Math.floor(sec % 60);
+                return m + ':' + (s < 10 ? '0' : '') + s;
+            }
 
-        loadTrack(0);
+            audio.addEventListener('timeupdate', () => {
+                seek.value = audio.currentTime;
+                curTime.innerText = format(audio.currentTime);
+            });
+
+            audio.addEventListener('loadedmetadata', () => {
+                seek.max = audio.duration;
+                durTime.innerText = format(audio.duration);
+            });
+
+            audio.addEventListener('ended', () => {
+                if (index < playlist.length - 1) index++; else index = 0;
+                loadTrack(index);
+                if (playing) audio.play();
+            });
+
+            audio.addEventListener('error', (e) => {
+                console.error('Ошибка загрузки аудио:', e);
+                alert('Не удалось загрузить музыку. Проверь ссылки на файлы.');
+            });
+
+            playBtn.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play().then(() => {
+                        playBtn.classList.replace('fa-play', 'fa-pause');
+                        playing = true;
+                    }).catch(e => {
+                        console.warn('Не удалось воспроизвести:', e);
+                        alert('Музыка не играет. Возможно, файлы не загружены на GitHub. Смотри инструкцию ниже.');
+                    });
+                } else {
+                    audio.pause();
+                    playBtn.classList.replace('fa-pause', 'fa-play');
+                    playing = false;
+                }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                index = index > 0 ? index - 1 : playlist.length - 1;
+                loadTrack(index);
+            });
+
+            nextBtn.addEventListener('click', () => {
+                index = index < playlist.length - 1 ? index + 1 : 0;
+                loadTrack(index);
+            });
+
+            seek.addEventListener('input', () => audio.currentTime = seek.value);
+
+            loadTrack(0);
+        })();
     </script>
+
+    <!-- Инструкция по загрузке музыки на GitHub -->
+    <div style="position: fixed; bottom: 20px; right: 20px; background: #1f1338; border: 2px solid #b47aff; border-radius: 30px; padding: 15px 25px; color: white; font-size: 0.9rem; max-width: 300px; z-index: 200; backdrop-filter: blur(5px;">
+        <i class="fas fa-music" style="color: #b47aff; margin-right: 10px;"></i>
+        <strong>Музыка не играет?</strong><br>
+        1. Скачай mp3-файлы с Google Drive.<br>
+        2. Загрузи их в папку своего репозитория MyBio на GitHub.<br>
+        3. Получи raw-ссылку (например, https://raw.githubusercontent.com/.../имяфайла.mp3).<br>
+        4. Замени ссылки в массиве playlist выше.<br>
+        <a href="#" onclick="this.parentElement.style.display='none'" style="color: #e5b2ff; float: right;">Закрыть</a>
+    </div>
 </body>
 </html>
